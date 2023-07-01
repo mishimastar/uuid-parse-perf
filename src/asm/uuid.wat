@@ -30,8 +30,8 @@
     )
 
     (func (export "write32parsed64toglobalShift") (param $shift i32) (param $val i32)
-        (call $parse16char (i64.extend_i32_s(local.get $val)))
-        (i64.shl (i64.extend_i32_u(local.get $shift)))
+        (call $parse16char (i64.extend_i32_s (local.get $val)))
+        (i64.shl (i64.extend_i32_u (local.get $shift)))
         (global.get $milliseconds)
         (i64.add )
         (global.set $milliseconds)
@@ -405,6 +405,7 @@
         (i64.const 12219292800000)
         (i64.sub)
         (global.set $milliseconds (i64.const 0))
+        
     )
 
 )

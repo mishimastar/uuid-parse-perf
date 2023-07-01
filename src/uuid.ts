@@ -131,6 +131,32 @@ const webasm20 = (uuid: string): Date => {
     for (let i = 0; i < 18; i++) expl.write32parsed64(i * 8, bb[i]!);
     return new Date(Number(expl.millis20()));
 };
+const webasm21 = (uuid: string): Date => {
+    expl.write32parsed64(0, uuid.charCodeAt(0));
+    expl.write32parsed64(1 * 8, uuid.charCodeAt(1));
+    expl.write32parsed64(2 * 8, uuid.charCodeAt(2));
+    expl.write32parsed64(3 * 8, uuid.charCodeAt(3));
+    expl.write32parsed64(4 * 8, uuid.charCodeAt(4));
+    expl.write32parsed64(5 * 8, uuid.charCodeAt(5));
+    expl.write32parsed64(6 * 8, uuid.charCodeAt(6));
+    expl.write32parsed64(7 * 8, uuid.charCodeAt(7));
+    expl.write32parsed64(8 * 8, uuid.charCodeAt(8));
+    expl.write32parsed64(9 * 8, uuid.charCodeAt(9));
+    expl.write32parsed64(10 * 8, uuid.charCodeAt(10));
+    expl.write32parsed64(11 * 8, uuid.charCodeAt(11));
+    expl.write32parsed64(12 * 8, uuid.charCodeAt(12));
+    expl.write32parsed64(13 * 8, uuid.charCodeAt(13));
+    expl.write32parsed64(14 * 8, uuid.charCodeAt(14));
+    expl.write32parsed64(15 * 8, uuid.charCodeAt(15));
+    expl.write32parsed64(16 * 8, uuid.charCodeAt(16));
+    expl.write32parsed64(17 * 8, uuid.charCodeAt(17));
+    return new Date(Number(expl.millis20()));
+};
+const webasm20jsshift = (uuid: string): Date => {
+    const bb = Buffer.from(uuid);
+    for (let i = 0; i < 18; i++) expl.write32parsed64(i << 3, bb[i]!);
+    return new Date(Number(expl.millis20()));
+};
 
 const order = [15, 16, 17, 9, 10, 11, 12, 0, 1, 2, 3, 4, 5, 6, 7] as const;
 const shift = [56, 52, 48, 44, 40, 36, 32, 28, 24, 20, 16, 12, 8, 4, 0] as const;
@@ -145,18 +171,90 @@ const webasm31 = (uuid: string): Date => {
     for (let i = 0; i < order.length; i++) expl.write32parsed64toglobalShift(shift[i]!, bb[order[i]!]!);
     return new Date(Number(expl.millis30()));
 };
+const webasm32 = (uuid: string): Date => {
+    const bb = Buffer.from(uuid);
+    expl.write32parsed64toglobal(bb[15]!);
+    expl.write32parsed64toglobal(bb[16]!);
+    expl.write32parsed64toglobal(bb[17]!);
+    expl.write32parsed64toglobal(bb[9]!);
+    expl.write32parsed64toglobal(bb[10]!);
+    expl.write32parsed64toglobal(bb[11]!);
+    expl.write32parsed64toglobal(bb[12]!);
+    expl.write32parsed64toglobal(bb[0]!);
+    expl.write32parsed64toglobal(bb[1]!);
+    expl.write32parsed64toglobal(bb[2]!);
+    expl.write32parsed64toglobal(bb[3]!);
+    expl.write32parsed64toglobal(bb[4]!);
+    expl.write32parsed64toglobal(bb[5]!);
+    expl.write32parsed64toglobal(bb[6]!);
+    expl.write32parsed64toglobal(bb[7]!);
+    return new Date(Number(expl.millis30()));
+};
+const webasm33 = (uuid: string): Date => {
+    expl.write32parsed64toglobal(uuid.charCodeAt(15)!);
+    expl.write32parsed64toglobal(uuid.charCodeAt(16)!);
+    expl.write32parsed64toglobal(uuid.charCodeAt(17)!);
+    expl.write32parsed64toglobal(uuid.charCodeAt(9)!);
+    expl.write32parsed64toglobal(uuid.charCodeAt(10)!);
+    expl.write32parsed64toglobal(uuid.charCodeAt(11)!);
+    expl.write32parsed64toglobal(uuid.charCodeAt(12)!);
+    expl.write32parsed64toglobal(uuid.charCodeAt(0)!);
+    expl.write32parsed64toglobal(uuid.charCodeAt(1)!);
+    expl.write32parsed64toglobal(uuid.charCodeAt(2)!);
+    expl.write32parsed64toglobal(uuid.charCodeAt(3)!);
+    expl.write32parsed64toglobal(uuid.charCodeAt(4)!);
+    expl.write32parsed64toglobal(uuid.charCodeAt(5)!);
+    expl.write32parsed64toglobal(uuid.charCodeAt(6)!);
+    expl.write32parsed64toglobal(uuid.charCodeAt(7)!);
+    return new Date(Number(expl.millis30()));
+};
+const webasm34 = (uuid: string): Date => {
+    for (const index of order) expl.write32parsed64toglobal(uuid.charCodeAt(index)!);
+    return new Date(Number(expl.millis30()));
+};
+const webasm35 = (uuid: string): Date => {
+    const bb = Buffer.from(uuid);
+    expl.write32parsed64toglobalShift(56, bb[15]!);
+    expl.write32parsed64toglobalShift(52, bb[16]!);
+    expl.write32parsed64toglobalShift(48, bb[17]!);
+    expl.write32parsed64toglobalShift(44, bb[9]!);
+    expl.write32parsed64toglobalShift(40, bb[10]!);
+    expl.write32parsed64toglobalShift(36, bb[11]!);
+    expl.write32parsed64toglobalShift(32, bb[12]!);
+    expl.write32parsed64toglobalShift(28, bb[0]!);
+    expl.write32parsed64toglobalShift(24, bb[1]!);
+    expl.write32parsed64toglobalShift(20, bb[2]!);
+    expl.write32parsed64toglobalShift(16, bb[3]!);
+    expl.write32parsed64toglobalShift(12, bb[4]!);
+    expl.write32parsed64toglobalShift(8, bb[5]!);
+    expl.write32parsed64toglobalShift(4, bb[6]!);
+    expl.write32parsed64toglobalShift(0, bb[7]!);
+    return new Date(Number(expl.millis30()));
+};
+const webasm36 = (uuid: string): Date => {
+    expl.write32parsed64toglobalShift(28, uuid.charCodeAt(0)!);
+    expl.write32parsed64toglobalShift(24, uuid.charCodeAt(1)!);
+    expl.write32parsed64toglobalShift(20, uuid.charCodeAt(2)!);
+    expl.write32parsed64toglobalShift(16, uuid.charCodeAt(3)!);
+    expl.write32parsed64toglobalShift(12, uuid.charCodeAt(4)!);
+    expl.write32parsed64toglobalShift(8, uuid.charCodeAt(5)!);
+    expl.write32parsed64toglobalShift(4, uuid.charCodeAt(6)!);
+    expl.write32parsed64toglobalShift(0, uuid.charCodeAt(7)!);
+    expl.write32parsed64toglobalShift(44, uuid.charCodeAt(9)!);
+    expl.write32parsed64toglobalShift(40, uuid.charCodeAt(10)!);
+    expl.write32parsed64toglobalShift(36, uuid.charCodeAt(11)!);
+    expl.write32parsed64toglobalShift(32, uuid.charCodeAt(12)!);
+    expl.write32parsed64toglobalShift(56, uuid.charCodeAt(15)!);
+    expl.write32parsed64toglobalShift(52, uuid.charCodeAt(16)!);
+    expl.write32parsed64toglobalShift(48, uuid.charCodeAt(17)!);
+    return new Date(Number(expl.millis30()));
+};
 
 const webasm40 = (uuid: string): Date => {
     return new Date(Number(expl.handle32arr(...Buffer.from(uuid).slice(0, 18))));
 };
 
-const webasm20jsshift = (uuid: string): Date => {
-    const bb = Buffer.from(uuid);
-    for (let i = 0; i < 18; i++) expl.write32parsed64(i << 3, bb[i]!);
-    return new Date(Number(expl.millis20()));
-};
-
-const webasm10noJSMEM = (_uuid: string): Date => {
+const webasm10constUUID = (_uuid: string): Date => {
     return new Date(Number(expl.millis10()));
 };
 
@@ -180,9 +278,7 @@ const webasmnocopybutstack = (uuid: string): Date => {
     return new Date(Number(expl.millis3()));
 };
 
-const webasmNOLOGIC = (_uuid: string): Date => {
-    // const bb = Buffer.from(uuid);
-    // for (let i = 0; i < 18; i++) expl.fillmem(i, bb[i]!);
+const webasmReturn0 = (_uuid: string): Date => {
     return new Date(Number(expl.parseHexM()));
 };
 
@@ -198,18 +294,24 @@ run().then((exp) => {
     log(uuid, cassandra);
     log(uuid, utils);
     log(uuid, sergo);
-    log(uuid, webasm10noJSMEM);
+    log(uuid, webasm10constUUID);
     log(uuid, webasm);
     log(uuid, webasmnocopy);
     log(uuid, webasmnocopybutstack);
     log(uuid, webasm10);
     log(uuid, webasm20);
+    log(uuid, webasm21);
     log(uuid, webasm20jsshift);
     log(uuid, webasm30);
     log(uuid, webasm31);
+    log(uuid, webasm32);
+    log(uuid, webasm33);
+    log(uuid, webasm34);
+    log(uuid, webasm35);
+    log(uuid, webasm36);
     log(uuid, webasm40);
     log(uuid, webasmtextenc);
-    log(uuid, webasmNOLOGIC);
+    log(uuid, webasmReturn0);
     const uuids: string[][] = [];
     for (let i = 0; i < epochs; i++) {
         const buf: string[] = [];
@@ -224,15 +326,21 @@ run().then((exp) => {
         webasm,
         webasm10,
         webasm20,
+        webasm20jsshift,
+        webasm21,
         webasm30,
         webasm31,
+        webasm32,
+        webasm33,
+        webasm34,
+        webasm35,
+        webasm36,
         webasm40,
-        webasm20jsshift,
-        webasm10noJSMEM,
+        webasm10constUUID,
         webasmnocopy,
         webasmnocopybutstack,
         webasmtextenc,
-        webasmNOLOGIC,
+        webasmReturn0,
         myown,
         github,
         cassandra,
