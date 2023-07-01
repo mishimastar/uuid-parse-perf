@@ -132,6 +132,24 @@ const webasm20 = (uuid: string): Date => {
     return new Date(Number(expl.millis20()));
 };
 
+const order = [15, 16, 17, 9, 10, 11, 12, 0, 1, 2, 3, 4, 5, 6, 7] as const;
+const shift = [56, 52, 48, 44, 40, 36, 32, 28, 24, 20, 16, 12, 8, 4, 0] as const;
+
+const webasm30 = (uuid: string): Date => {
+    const bb = Buffer.from(uuid);
+    for (const index of order) expl.write32parsed64toglobal(bb[index]!);
+    return new Date(Number(expl.millis30()));
+};
+const webasm31 = (uuid: string): Date => {
+    const bb = Buffer.from(uuid);
+    for (let i = 0; i < order.length; i++) expl.write32parsed64toglobalShift(shift[i]!, bb[order[i]!]!);
+    return new Date(Number(expl.millis30()));
+};
+
+const webasm40 = (uuid: string): Date => {
+    return new Date(Number(expl.handle32arr(...Buffer.from(uuid).slice(0, 18))));
+};
+
 const webasm20jsshift = (uuid: string): Date => {
     const bb = Buffer.from(uuid);
     for (let i = 0; i < 18; i++) expl.write32parsed64(i << 3, bb[i]!);
@@ -187,6 +205,9 @@ run().then((exp) => {
     log(uuid, webasm10);
     log(uuid, webasm20);
     log(uuid, webasm20jsshift);
+    log(uuid, webasm30);
+    log(uuid, webasm31);
+    log(uuid, webasm40);
     log(uuid, webasmtextenc);
     log(uuid, webasmNOLOGIC);
     const uuids: string[][] = [];
@@ -203,6 +224,9 @@ run().then((exp) => {
         webasm,
         webasm10,
         webasm20,
+        webasm30,
+        webasm31,
+        webasm40,
         webasm20jsshift,
         webasm10noJSMEM,
         webasmnocopy,

@@ -5,6 +5,8 @@
     ;; (global $nine i64 (i64.const 58))
     ;; (global $alow i64 (i64.const 87))
 
+    (global $milliseconds (mut i64) (i64.const 0))
+
     (func (export "fillmem") (param $offset i32) (param $val i32)
         (i32.store8 (local.get $offset) (local.get $val))
     )
@@ -18,6 +20,128 @@
 
     (func (export "write32parsed64") (param $offset i32) (param $val i32)
         (i64.store (local.get $offset) (call $parse16char (i64.extend_i32_s(local.get $val))))
+    )
+
+    (func (export "write32parsed64toglobal") (param $val i32)
+        (global.get $milliseconds)
+        (i64.shl (i64.const 4))
+        (i64.add (call $parse16char (i64.extend_i32_s(local.get $val))))
+        (global.set $milliseconds)
+    )
+
+    (func (export "write32parsed64toglobalShift") (param $shift i32) (param $val i32)
+        (call $parse16char (i64.extend_i32_s(local.get $val)))
+        (i64.shl (i64.extend_i32_u(local.get $shift)))
+        (global.get $milliseconds)
+        (i64.add )
+        (global.set $milliseconds)
+    )
+
+    (func (export "handle32arr") 
+        (param $b8 i32) (param $b9 i32) (param $b10 i32) (param $b11 i32) 
+        (param $b12 i32) (param $b13 i32) (param $b14 i32) (param $b15 i32)
+        (param $u1 i32)
+        (param $b4 i32) (param $b5 i32) (param $b6 i32) (param $b7 i32)
+        (param $u2 i32) (param $u3 i32)
+        (param $b1 i32) (param $b2 i32) (param $b3 i32) 
+        (result i64)
+
+        (i64.const 0)
+        (i64.extend_i32_u (local.get $b1))
+        (call $parse16char)
+        (i64.add)
+
+        (i64.shl (i64.const 4))
+        (i64.extend_i32_u (local.get $b2))
+        (call $parse16char)
+        (i64.add)
+        
+
+        (i64.shl (i64.const 4))
+        (i64.extend_i32_u (local.get $b3))
+        (call $parse16char)
+        (i64.add)
+        
+
+        (i64.shl (i64.const 4))
+        (i64.extend_i32_u (local.get $b4))
+        (call $parse16char)
+        (i64.add)
+        
+        
+        (i64.shl (i64.const 4))
+        (i64.extend_i32_u (local.get $b5))
+        (call $parse16char)
+        (i64.add)
+        
+
+        (i64.shl (i64.const 4))
+        (i64.extend_i32_u (local.get $b6))
+        (call $parse16char)
+        (i64.add)
+        
+
+        (i64.shl (i64.const 4))
+        (i64.extend_i32_u (local.get $b7))
+        (call $parse16char)
+        (i64.add)
+        
+
+        (i64.shl (i64.const 4))
+        (i64.extend_i32_u (local.get $b8))
+        (call $parse16char)
+        (i64.add)
+        
+
+        (i64.shl (i64.const 4))
+        (i64.extend_i32_u (local.get $b9))
+        (call $parse16char)
+        (i64.add)
+        
+
+        (i64.shl (i64.const 4))
+        (i64.extend_i32_u (local.get $b10))
+        (call $parse16char)
+        (i64.add)
+        
+
+        (i64.shl (i64.const 4))
+        (i64.extend_i32_u (local.get $b11))
+        (call $parse16char)
+        (i64.add)
+        
+
+        (i64.shl (i64.const 4))
+        (i64.extend_i32_u (local.get $b12))
+        (call $parse16char)
+        (i64.add)
+        
+
+        (i64.shl (i64.const 4))
+        (i64.extend_i32_u (local.get $b13))
+        (call $parse16char)
+        (i64.add)
+        
+
+        (i64.shl (i64.const 4))
+        (i64.extend_i32_u (local.get $b14))
+        (call $parse16char)
+        (i64.add)
+        
+
+        (i64.shl (i64.const 4))
+        (i64.extend_i32_u (local.get $b15))
+        (call $parse16char)
+        (i64.add)
+
+        (i64.const 10000)
+        (i64.div_u)
+        (i64.const 12219292800000)
+        (i64.sub)
+    )
+
+    (func (export "readresults") (result i64)
+        (global.get $milliseconds)
     )
 
     (func (export "read32") (param $offset i32) (result i32)
@@ -358,10 +482,7 @@
     )
 
     (func $millis10 (export "millis10") (result i64)
-        ;; (call $orientate3)
-        ;; (local.set $result )
         (call $parseHex2)
-        ;; (local.get $result)
         (i64.const 10000)
         (i64.div_u)
         (i64.const 12219292800000)
@@ -374,6 +495,15 @@
         (i64.div_u)
         (i64.const 12219292800000)
         (i64.sub)
+    )
+
+    (func $millis30 (export "millis30") (result i64)
+        (global.get $milliseconds)
+        (i64.const 10000)
+        (i64.div_u)
+        (i64.const 12219292800000)
+        (i64.sub)
+        (global.set $milliseconds (i64.const 0))
     )
 
 
