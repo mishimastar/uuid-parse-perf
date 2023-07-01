@@ -19,18 +19,18 @@
     )
 
     (func (export "write32parsed64") (param $offset i32) (param $val i32)
-        (i64.store (local.get $offset) (call $parse16char (i64.extend_i32_s(local.get $val))))
+        (i64.store (local.get $offset) (call $parse16char (i64.extend_i32_u(local.get $val))))
     )
 
     (func (export "write32parsed64toglobal") (param $val i32)
         (global.get $milliseconds)
         (i64.shl (i64.const 4))
-        (i64.add (call $parse16char (i64.extend_i32_s(local.get $val))))
+        (i64.add (call $parse16char (i64.extend_i32_u(local.get $val))))
         (global.set $milliseconds)
     )
 
     (func (export "write32parsed64toglobalShift") (param $shift i32) (param $val i32)
-        (call $parse16char (i64.extend_i32_s (local.get $val)))
+        (call $parse16char (i64.extend_i32_u (local.get $val)))
         (i64.shl (i64.extend_i32_u (local.get $shift)))
         (global.get $milliseconds)
         (i64.add )

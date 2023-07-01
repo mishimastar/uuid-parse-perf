@@ -7,7 +7,8 @@
         "clean": "rimraf {tsconfig.tsbuildinfo,built}",
         "pret": "prettier --write .",
         "lint": "eslint .",
-        "compile": "tsc -p . && wat2wasm ./src/asm/uuid.wat -o ./src/asm/uuid.wasm",
+        "compile": "tsc -p .",
+        "asm": "wat2wasm ./src/asm/uuid.wat -o ./src/asm/uuid.wasm",
         "test": "node --test"
     },
     "repository": {
@@ -23,6 +24,7 @@
     "author": "mishimastar",
     "license": "MIT",
     "devDependencies": {
+        "@types/benchmark": "^2.1.2",
         "@types/node": "^18.6.3",
         "@types/uuid": "^9.0.2",
         "@typescript-eslint/eslint-plugin": "^5.31.0",
@@ -30,6 +32,7 @@
         "prettier": "^2.7.1"
     },
     "dependencies": {
+        "benchmark": "^2.1.4",
         "cassandra-driver": "^4.6.4",
         "typescript": "^4.7.4",
         "uuid": "^9.0.0"
