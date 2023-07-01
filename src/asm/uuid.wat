@@ -280,76 +280,6 @@
         ;; (if (result i32) (then (i32.const 1)) (else (i32.const 0)))
     )
     (func $parseHexM (export "parseHexM")  (result i64) (i64.const 0))
-    (func $parseHex (export "parseHex") (param $str i32) (result i64)
-    ;; (param $str i32
-        ;; (local $str i32)
-        (local $index i32)
-        (local $digit i64)
-        (local $result i64)
-        (local $char i64)
-        
-    
-        ;; Initialize the result to 0
-        ;; (local.set $str (i32.const 32))
-        (local.set $result (i64.const 0))
-
-        ;; Iterate over each character in the string
-        (loop
-        ;; Load the character at the current index
-            (i64.load8_u (i32.add (local.get $str) (local.get $index)))
-            (local.set $char)
-
-            (if (result)
-            (call $codeMoreThan9 (local.get $char))
-            (then
-                ;; Convert the character to a digit
-                (local.get $char)
-                (i64.const 87)
-                (i64.sub)
-                (local.set $digit)
-
-                ;; Multiply the result by 16 and add the digit
-                (local.get $result)
-                (i64.const 16)
-                (i64.mul)
-                (local.get $digit)
-                (i64.add)
-                (local.set $result)
-            )
-            (else 
-            ;; Convert the character to a digit
-                (local.get $char)
-                (i64.const 48)
-                (i64.sub)
-                (local.set $digit)
-
-                ;; Multiply the result by 16 and add the digit
-                (local.get $result)
-                (i64.const 16)
-                (i64.mul)
-                (local.get $digit)
-                (i64.add)
-                (local.set $result)
-            
-                
-            )
-            )   
-
-        ;; Increment the index
-        (local.get $index)
-        (i32.const 1)
-        (i32.add)
-        (local.set $index)
-
-        ;; Check if the end of the string has been reached
-        (i32.load8_u (i32.add (local.get $str) (local.get $index)))
-        (i32.const 0)
-        (i32.ne)
-        (br_if 0)
-        )
-
-        (local.get $result)
-    )
 
     (func $parse16char (export "parse16char") (param $char i64) (result i64)
         (i64.sub (local.get $char) (i64.const 87))
@@ -358,93 +288,69 @@
         select  
     )
 
+    (func $parseHex (export "parseHex") (param $str i32) (result i64)
+        (local $index i32)
+        (local $digit i64)
+        (local $result i64)
+  
+        ;; Initialize the result to 0
+        (local.set $result (i64.const 0))
+
+        ;; Iterate over each character in the string
+        (loop
+            (i64.load8_u (i32.add (local.get $str) (local.get $index)))
+            (call $parse16char)
+            (local.get $result)
+            (i64.shl (i64.const 4))
+            (i64.add)
+            (local.set $result)
+
+            (local.get $index)
+            (i32.const 1)
+            (i32.add)
+            (local.set $index)
+
+            (i32.load8_u (i32.add (local.get $str) (local.get $index)))
+            (i32.const 0)
+            (i32.ne)
+            (br_if 0)
+        )
+
+        (local.get $result)
+    )
+
+
+
     (func $parseHex2 (export "parseHex2") (result i64)
-
-        (i64.load8_u (i32.const 15))
-        (call $parse16char)
-
+        (call $parse16char (i64.load8_u (i32.const 15)))
         (i64.shl (i64.const 4))
-        (i64.load8_u (i32.const 16))
-        (call $parse16char)
-        (i64.add)
-        
-
+        (i64.add (call $parse16char (i64.load8_u (i32.const 16))))
         (i64.shl (i64.const 4))
-        (i64.load8_u (i32.const 17))
-        (call $parse16char)
-        (i64.add)
-        
-
+        (i64.add (call $parse16char (i64.load8_u (i32.const 17))))
         (i64.shl (i64.const 4))
-        (i64.load8_u (i32.const 9))
-        (call $parse16char)
-        (i64.add)
-        
-        
+        (i64.add (call $parse16char (i64.load8_u (i32.const 9))))
         (i64.shl (i64.const 4))
-        (i64.load8_u (i32.const 10))
-        (call $parse16char)
-        (i64.add)
-        
-
+        (i64.add (call $parse16char (i64.load8_u (i32.const 10))))
         (i64.shl (i64.const 4))
-        (i64.load8_u (i32.const 11))
-        (call $parse16char)
-        (i64.add)
-        
-
+        (i64.add (call $parse16char (i64.load8_u (i32.const 11))))
         (i64.shl (i64.const 4))
-        (i64.load8_u (i32.const 12))
-        (call $parse16char)
-        (i64.add)
-        
-
+        (i64.add (call $parse16char (i64.load8_u (i32.const 12))))
         (i64.shl (i64.const 4))
-        (i64.load8_u (i32.const 0))
-        (call $parse16char)
-        (i64.add)
-        
-
+        (i64.add (call $parse16char (i64.load8_u (i32.const 0))))
         (i64.shl (i64.const 4))
-        (i64.load8_u (i32.const 1))
-        (call $parse16char)
-        (i64.add)
-        
-
+        (i64.add (call $parse16char (i64.load8_u (i32.const 1))))
         (i64.shl (i64.const 4))
-        (i64.load8_u (i32.const 2))
-        (call $parse16char)
-        (i64.add)
-        
-
+        (i64.add (call $parse16char (i64.load8_u (i32.const 2))))
         (i64.shl (i64.const 4))
-        (i64.load8_u (i32.const 3))
-        (call $parse16char)
-        (i64.add)
-        
-
+        (i64.add (call $parse16char (i64.load8_u (i32.const 3))))
         (i64.shl (i64.const 4))
-        (i64.load8_u (i32.const 4))
-        (call $parse16char)
-        (i64.add)
-        
-
+        (i64.add (call $parse16char (i64.load8_u (i32.const 4))))
         (i64.shl (i64.const 4))
-        (i64.load8_u (i32.const 5))
-        (call $parse16char)
-        (i64.add)
-        
-
+        (i64.add (call $parse16char (i64.load8_u (i32.const 5))))
         (i64.shl (i64.const 4))
-        (i64.load8_u (i32.const 6))
-        (call $parse16char)
-        (i64.add)
-        
-
+        (i64.add (call $parse16char (i64.load8_u (i32.const 6))))
         (i64.shl (i64.const 4))
-        (i64.load8_u (i32.const 7))
-        (call $parse16char)
-        (i64.add)
+        (i64.add (call $parse16char (i64.load8_u (i32.const 7))))
     )
 
     
