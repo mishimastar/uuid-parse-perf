@@ -1,6 +1,4 @@
 (module
-    ;; Declare linear memory with initial size of 1 page (64 KiB) and maximal
-    ;; size of 100 pages, and export it to host.
     (memory (export "memory") 1 100)
 
     ;; (global $zero i64 (i64.const 48))
@@ -31,76 +29,35 @@
     )
 
     (func $calcHex (export "calcHex") (result i64)
-
         (i64.load (i32.const 120))
         (i64.shl (i64.const 4))
-        (i64.load (i32.const 128))
-        (i64.add)
-        
-
+        (i64.add (i64.load (i32.const 128)))
         (i64.shl (i64.const 4))
-        (i64.load (i32.const 136))
-        (i64.add)
-        
-
+        (i64.add (i64.load (i32.const 136)))
         (i64.shl (i64.const 4))
-        (i64.load (i32.const 72))
-        (i64.add)
-        
-        
+        (i64.add (i64.load (i32.const 72)))
         (i64.shl (i64.const 4))
-        (i64.load (i32.const 80))
-        (i64.add)
-        
-
+        (i64.add (i64.load (i32.const 80)))
         (i64.shl (i64.const 4))
-        (i64.load (i32.const 88))
-        (i64.add)
-        
-
+        (i64.add (i64.load (i32.const 88)))
         (i64.shl (i64.const 4))
-        (i64.load (i32.const 96))
-        (i64.add)
-        
-
+        (i64.add (i64.load (i32.const 96)))
         (i64.shl (i64.const 4))
-        (i64.load (i32.const 0))
-        (i64.add)
-        
-
+        (i64.add (i64.load (i32.const 0)))
         (i64.shl (i64.const 4))
-        (i64.load (i32.const 8))
-        (i64.add)
-        
-
+        (i64.add (i64.load (i32.const 8)))
         (i64.shl (i64.const 4))
-        (i64.load (i32.const 16))
-        (i64.add)
-        
-
+        (i64.add (i64.load (i32.const 16)))
         (i64.shl (i64.const 4))
-        (i64.load (i32.const 24))
-        (i64.add)
-        
-
+        (i64.add (i64.load (i32.const 24)))
         (i64.shl (i64.const 4))
-        (i64.load (i32.const 32))
-        (i64.add)
-        
-
+        (i64.add (i64.load (i32.const 32)))
         (i64.shl (i64.const 4))
-        (i64.load (i32.const 40))
-        (i64.add)
-        
-
+        (i64.add (i64.load (i32.const 40)))
         (i64.shl (i64.const 4))
-        (i64.load (i32.const 48))
-        (i64.add)
-        
-
+        (i64.add (i64.load (i32.const 48)))
         (i64.shl (i64.const 4))
-        (i64.load (i32.const 56))
-        (i64.add)
+        (i64.add (i64.load (i32.const 56)))
     )
 
 

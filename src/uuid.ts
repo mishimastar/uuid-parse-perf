@@ -51,20 +51,16 @@ const github = (uuid: string): Date => {
     return new Date(msec);
 };
 
-// const desat = 10000n;
-
 const myown = (uuid: string): Date => {
     if (typeof uuid !== 'string' || uuid.length !== 36) throw new Error('Not a uuid');
     if (uuid[14] !== '1') throw new Error('Not a uuid v1');
     const tim = uuid.slice(15, 18) + uuid.slice(9, 13) + uuid.slice(0, 8);
     const nanos = Number.parseInt(tim, 16);
-    // const tim = '0x' + uuid.slice(15, 18) + uuid.slice(9, 13) + uuid.slice(0, 8);
-    // const nanos = BigInt(tim);
-    // const millis = Number(nanos / desat);
     const millis = Math.floor(nanos / 10000);
     const millisUnix = millis - unixToGregorian;
     return new Date(millisUnix);
 };
+
 const sergo = (uuid: string): Date => {
     if (typeof uuid !== 'string' || uuid.length !== 36) throw new Error('Not a uuid');
     if (uuid[14] !== '1') throw new Error('Not a uuid v1');
@@ -77,12 +73,9 @@ type Uuid2Date = (uuid: string) => Date;
 const perftest = (fun: (uuid: string) => Date, uuids: string[]): number => {
     const start = performance.now();
     for (const uuid of uuids) fun(uuid);
-    const stop = performance.now();
-    const d = stop - start;
-    // const avg = d / attempts;
-    return d;
-    // console.log(fun.name, avg, 'ms/attempt', 1 / avg, 'aps');
+    return performance.now() - start;
 };
+
 // epochs: number, attempts: number,
 
 const retrier = (uuids: string[][], ...funcs: Uuid2Date[]) => {
