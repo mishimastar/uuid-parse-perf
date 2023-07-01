@@ -37,6 +37,10 @@
         (global.set $milliseconds)
     )
 
+    (func (export "readresults") (result i64)
+        (global.get $milliseconds)
+    )
+
     (func (export "handle32arr") 
         (param $b8 i32) (param $b9 i32) (param $b10 i32) (param $b11 i32) 
         (param $b12 i32) (param $b13 i32) (param $b14 i32) (param $b15 i32)
@@ -138,10 +142,6 @@
         (i64.sub)
         (i64.const 10000)
         (i64.div_u)
-    )
-
-    (func (export "readresults") (result i64)
-        (global.get $milliseconds)
     )
 
     (func (export "read32") (param $offset i32) (result i32)
@@ -360,10 +360,8 @@
 
     (func $parseHex2 (export "parseHex2") (result i64)
 
-        (i64.const 0)
         (i64.load8_u (i32.const 15))
         (call $parse16char)
-        (i64.add)
 
         (i64.shl (i64.const 4))
         (i64.load8_u (i32.const 16))
@@ -502,17 +500,6 @@
         (i64.sub)
         (global.set $milliseconds (i64.const 0))
     )
-
-
-    ;; (func $millisnoJSMEM (export "millisnoJSMEM") (result i64) (local $result i64)
-    ;;     (call $orientate)
-    ;;     (local.set $result (call $parseHex))
-    ;;     (local.get $result)
-    ;;     (i64.const 10000)
-    ;;     (i64.div_u)
-    ;;     (i64.const 12219292800000)
-    ;;     (i64.sub)
-    ;; )
 
 )
 
