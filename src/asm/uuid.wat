@@ -502,21 +502,3 @@
     )
 
 )
-
-
-
-;; (module
-;;     (import "console" "log" (func $log (param i32 i32)))
-;;     (import "js" "mem" (memory 1))
-;;     (data $dd (i32.const 0) "Hello") 
-;;     (func (export "writeHi")(param $length i32)(param $ii i32)(result i32)
-;;         i32.const 0  ;; pass offset 0 to log
-;;         local.get $length
-;;         ;; i32.const 2  ;; pass length 2 to log
-;;         call $log
-;;         (i32.mul (local.get $length) (local.get $ii))
-;;         ;; local.set 1
-        
-        
-;;     )
-;; )
