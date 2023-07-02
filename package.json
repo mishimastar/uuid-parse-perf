@@ -1,25 +1,26 @@
 {
-    "name": "bignum",
+    "name": "uuid-parse-perf",
     "version": "0.1.0",
-    "description": "BigFloat implementation for NodeJS",
+    "description": "some performance tests for uuidv1 parsers",
     "main": "main.ts",
     "scripts": {
         "clean": "rimraf {tsconfig.tsbuildinfo,built}",
         "pret": "prettier --write .",
         "lint": "eslint .",
         "compile": "tsc -p .",
-        "asm": "wat2wasm ./src/asm/uuid.wat -o ./src/asm/uuid.wasm",
-        "test": "node --test"
+        "asm": "wat2wasm ./src/mem8/mem8.wat -o ./src/mem8/mem8.wasm && wat2wasm ./src/mem64/mem64.wat -o ./src/mem64/mem64.wasm && wat2wasm ./src/global/global.wat -o ./src/global/global.wasm",
+        "test": "node --test",
+        "start": "npm run compile && npm run asm && node --experimental-wasi-unstable-preview1 ./built/main.js "
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/mishimastar/bignum.git"
+        "url": "git+https://github.com/mishimastar/uuid-parse-perf.git"
     },
     "keywords": [
-        "bignum",
-        "bigint",
+        "uuid",
+        "paser",
         "nodejs",
-        "bigfloat"
+        "webassembly"
     ],
     "author": "mishimastar",
     "license": "MIT",
@@ -38,7 +39,7 @@
         "uuid": "^9.0.0"
     },
     "bugs": {
-        "url": "https://github.com/mishimastar/bignum/issues"
+        "url": "https://github.com/mishimastar/uuid-parse-perf/issues"
     },
-    "homepage": "https://github.com/mishimastar/bignum#readme"
+    "homepage": "https://github.com/mishimastar/uuid-parse-perf#readme"
 }
