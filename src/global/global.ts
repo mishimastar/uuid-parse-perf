@@ -37,12 +37,14 @@ export const GetGlobalParser1 = async (): Promise<UUIDParser> => {
     };
     return GlobalParser;
 };
-
+// const uuidRegex = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/;
 export const GetGlobalParser2 = async (): Promise<UUIDParser> => {
     const { getMilliseconds, pasteShiftChar } = (await WebAssembly.instantiate(readFileSync(path))).instance
         .exports as UUIDParserGlobal;
 
     const GlobalParserShifts = (uuid: string): Date => {
+        // if (!uuidRegex.test(uuid)) throw new TypeError('unexpectable uuid', { cause: { uuid } });
+        // uuid = uuid.toLowerCase();
         pasteShiftChar(28, uuid.charCodeAt(0)!);
         pasteShiftChar(24, uuid.charCodeAt(1)!);
         pasteShiftChar(20, uuid.charCodeAt(2)!);

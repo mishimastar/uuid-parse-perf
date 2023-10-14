@@ -1,4 +1,4 @@
-import type { UUIDParser } from './types';
+import type { UUIDGenerator, UUIDParser } from './types.js';
 import { v1 } from 'uuid';
 
 type median = { median: number; min: number; max: number };
@@ -11,7 +11,13 @@ const evalParser = (fun: UUIDParser, uuids: string[]): number => {
     return performance.now() - start;
 };
 
-const createMap = (funcs: UUIDParser[]): Map<string, number[]> => {
+const evalGenerator = (fun: UUIDGenerator, attempts: number): number => {
+    const start = performance.now();
+    for (let i = 0; i < attempts; i++) fun();
+    return performance.now() - start;
+};
+
+const createMap = (funcs: (UUIDParser | UUIDGenerator)[]): Map<string, number[]> => {
     const out = new Map<string, number[]>();
     for (const { name } of funcs) out.set(name, []);
     // console.log('map', funcs, out);
@@ -26,7 +32,15 @@ const generateUUIDs = (epochs: number, attempts: number): string[][] => {
         for (let j = 0; j < attempts; j++) buf.push(v1());
         out.push(buf);
     }
-    console.log('Generated', epochs * attempts, 'UUIDs v1');
+    const st = performance.now();
+    for (let i = 0; i < epochs * attempts * 2; i++) v1();
+    console.log(
+        'Generated',
+        epochs * attempts,
+        'UUIDs v1',
+        (epochs * attempts * 1000 * 2) / (performance.now() - st),
+        'ops/s'
+    );
     return out;
 };
 
@@ -103,10 +117,22 @@ const drawString = (pos: number, maxNameLen: number, name: string, s: statsObj) 
     );
 };
 
-export const Retrier = (epochs: number, attempts: number, ...funcs: UUIDParser[]) => {
+export const RetrierParse = (epochs: number, attempts: number, ...funcs: UUIDParser[]) => {
+    console.log('\n--------Parsing Performance Tests-----------');
+    console.log('Epochs:', epochs, ', Attempts per epoch:', attempts);
     const map = createMap(funcs);
     const uuids = generateUUIDs(epochs, attempts);
     for (const arr of uuids) for (const fun of funcs) map.get(fun.name)!.push(evalParser(fun, arr));
+    const stats = calcStats(map, epochs, attempts);
+    drawStats(stats);
+};
+
+export const RetrierGen = (epochs: number, attempts: number, ...funcs: UUIDGenerator[]) => {
+    console.log('\n--------Generating Performance Tests--------');
+    console.log('Epochs:', epochs, ', Attempts per epoch:', attempts);
+    const map = createMap(funcs);
+    // const uuids = generateUUIDs(epochs, attempts);
+    for (let i = 0; i < epochs; i++) for (const fun of funcs) map.get(fun.name)!.push(evalGenerator(fun, attempts));
     const stats = calcStats(map, epochs, attempts);
     drawStats(stats);
 };

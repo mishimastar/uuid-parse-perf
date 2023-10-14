@@ -12,6 +12,11 @@
         "test": "node --test",
         "start": "npm run compile && npm run asm && node --experimental-wasi-unstable-preview1 ./built/main.js "
     },
+    "exports": {
+        ".": {
+            "default": "./*"
+        }
+    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/mishimastar/uuid-parse-perf.git"
@@ -36,7 +41,8 @@
         "benchmark": "^2.1.4",
         "cassandra-driver": "^4.6.4",
         "typescript": "^4.7.4",
-        "uuid": "^9.0.0"
+        "uuid": "^9.0.0",
+        "uuid-wasm": "^0.1.5"
     },
     "bugs": {
         "url": "https://github.com/mishimastar/uuid-parse-perf/issues"

@@ -1,10 +1,11 @@
 import { types } from 'cassandra-driver';
-import type { UUIDParser } from './types';
+import type { UUIDGenerator, UUIDParser } from './types.js';
 
 const { TimeUuid } = types;
 const unixToGregorian = 12219292800000;
 
 export const CassandraParser: UUIDParser = (uuid: string): Date => TimeUuid.fromString(uuid).getDate();
+export const CassandraGenerator: UUIDGenerator = (): string => TimeUuid.now().toString();
 
 export const UtilsParser: UUIDParser = (uuid: string): Date => {
     const uuidArr = uuid.split('-');
