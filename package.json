@@ -42,7 +42,7 @@
         "cassandra-driver": "^4.6.4",
         "typescript": "^4.7.4",
         "uuid": "^9.0.0",
-        "uuid-wasm": "^0.1.5"
+        "uuid-wasm": "^0.1.6"
     },
     "bugs": {
         "url": "https://github.com/mishimastar/uuid-parse-perf/issues"
